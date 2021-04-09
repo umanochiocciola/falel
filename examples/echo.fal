@@ -1,0 +1,18 @@
+Get a string of max 3 chars and echo it back
+
+
+
+uib c; mov inb x4
+
+uib c; mov inb x5
+
+uib c; mov inb x6
+
+
+mov x4 out; fls c
+
+mov x5 out; fls c
+
+mov x6 out; fls c
+
+saz; add 10; mov acc out; fls c;  PRINT NEWLINE

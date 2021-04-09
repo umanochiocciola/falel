@@ -1,0 +1,9 @@
+
+uib d; mov inb x3
+
+mov x3 out
+fls d
+wnz x3
+fls d
+slh
+

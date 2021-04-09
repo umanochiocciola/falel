@@ -1,0 +1,29 @@
+
+Memory Scheme
+
+ |  out-buff  |  in-buff  |   acc   |  x3   ...  unused  ...  x255  |
+
+
+Commands
+
+mov R/I R       copy the value of the first arg to the register in second arg
+
+add I           adds integer to accumulator           |  wraps around
+sub I           subtracts integer to accumulator      |  max 255 min 0
+saz             Set Accumulator to Zero
+
+fls M           flushes out-buff to stdout.                                        | M(ode) can either be d(ecimal) or c(har)
+uib M           Update Input Buffer, gets a byte of input and stores it in x1      |
+
+wnz R/I         While Non Zero
+slh             Stop Loop Here
+
+
+
+Special Adresses Names
+
+out             refers to register x0 (out-buff)
+inb             refers to register x1 (in-buff)
+acc             refers to register x2 (acc)
+
+you can use names instead of registers in commands

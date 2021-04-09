@@ -1,0 +1,30 @@
+HELLO, WORLD!
+
+add 72; mov acc out; fls c; saz;    print H
+
+
+add 69; mov acc out; fls c; saz
+
+add 76; mov acc out; fls c; saz
+
+add 76; mov acc out; fls c; saz
+
+add 79; mov acc out; fls c; saz
+
+add 44; mov acc out; fls c; saz
+
+add 32; mov acc out; fls c; saz
+
+add 87; mov acc out; fls c; saz
+
+add 79; mov acc out; fls c; saz
+
+add 82; mov acc out; fls c; saz
+
+add 76; mov acc out; fls c; saz
+
+add 68; mov acc out; fls c; saz
+
+add 33; mov acc out; fls c; saz
+
+add 10; mov acc out; fls c; saz
