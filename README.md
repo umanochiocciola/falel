@@ -2,8 +2,7 @@
 
 Get started:
 
-  <a href='DOCS'>Documentation</a>
-  
+  <a href='DOCS'>Documentation</a></br>
   <a href='main.py'>Falel to C transpiler</a>
 
 Redistribution:
