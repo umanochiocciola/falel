@@ -7,5 +7,6 @@ Get started:
   <a href='main.py'>Falel to C transpiler</a>
 
 Redistribution:
-  <a href='LICENSE'>License</a>
+
+  <a href='LICENSE'>License</a></br>
   (witch is a commie version of the GPL)
