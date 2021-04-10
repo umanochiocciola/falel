@@ -1,10 +1,10 @@
 
-Memory Scheme
+# Memory Scheme
 
  |  out-buff  |  in-buff  |   acc   |  x3   ...  unused  ...  x255  |
 
 
-Commands
+# Commands
 
 mov R/I R       copy the value of the first arg to the register in second arg
 
@@ -20,10 +20,17 @@ slh             Stop Loop Here
 
 
 
-Special Adresses Names
+# Special Adresses Names
 
 out             refers to register x0 (out-buff)
 inb             refers to register x1 (in-buff)
 acc             refers to register x2 (acc)
 
 you can use names instead of registers in commands
+
+# Constants
+
+you can declare  an integer or register constant like this
+const I/R NAME
+
+

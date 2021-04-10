@@ -25,18 +25,10 @@ def debug(txt, typ='info'):
     0
 
 
-debug('setting up')
-
-cells = 255
-
-init = '#include <stdio.h>\n#define CELLS ' + str(cells) + '\n\nint main(){\nint tape[CELLS] = {0};'
-OUTPUT = '/*transpiled with falelC*/\n'+init+'\n'
-
-
 debug('building references')
 
 keys = {
-    'mov': 2,    
+    'mov': 2,
     'add': 1,
     'sub': 1,
     'fls': 1,
@@ -63,63 +55,82 @@ RegNames = {
     'inb': 'x1'
 }
 
+debug('reading constants')
+
+NewProgrBuff = []
+for line in program.split('\n'):
+    for comm in line.split(';'):
+        comm = comm.strip(' ')
+        #print(comm)
+        if comm.split(' ')[0] == 'const':
+            try:
+                RegNames[comm.split(' ')[1]] = comm.split(' ')[2]
+            except: debug(f'{comm}:  const statement not completed', 'error')
+        else:
+            NewProgrBuff.append(comm)
+
+program = NewProgrBuff
+
+#print(RegNames)
+debug('setting up')
+
+cells = 255
+
+init = '#include <stdio.h>\n#define CELLS ' + str(cells) + '\n\nint main(){\nint tape[CELLS] = {0};'
+OUTPUT = '/*transpiled with falelC*/\n'+init+'\n'
+
 
 debug('transpiling')
 
-program = program.split('\n')
-
+#print(program)
 POG = 0
 while POG < len(program):
-    
+
     cian = program[POG]
     POG += 1
+        
+    key = cian.split(' ')[0]
+    args = cian.strip(key+' ').split(' ')
+    if args == ['']: args = []
+
+    #print(f'{key} {args}')
+
+    if not(key in keys):
+        continue
     
-    for comm in cian.split(';'):
-        comm = comm.strip(' ')
-        
-        
-        key = comm.split(' ')[0]
-        args = comm.strip(key+' ').split(' ')
-        if args == ['']: args = []
+    if len(args) != keys[key]:
+        debug(f'line {POG}: {key} takes {keys[key]} arguments, but {len(args)} were given.', 'error')
+    
+    buildbuff = repls[key]
+    
+    for i in range(keys[key]):
+        if args != []: buildbuff = buildbuff.replace(f'${i}', args[i])
 
-        #print(f'{key} {args}')
-
-        if not(key in keys):
-            continue
-        
-        if len(args) != keys[key]:
-            debug(f'line {POG}: {key} takes {keys[key]} arguments, but {len(args)} were given.', 'error')
-        
-        buildbuff = repls[key]
-        
-        
-        for i in range(keys[key]):
-            if args != []: buildbuff = buildbuff.replace(f'${i}', args[i])
-
-        
-        for name in RegNames:
-            buildbuff = buildbuff.replace(name, RegNames[name])
-        
-        fixedbuff= ''
-        ficser = 0
-        for ch in buildbuff:
-            if ch == 'x':
-                ficser = 1
-                fixedbuff += 'tape['
-                
-            elif ficser and not (ch in '1234567890'):
-                fixedbuff += ']'+ch
-                ficser = 0
+    
+    for name in RegNames:
+        buildbuff = buildbuff.replace(name, RegNames[name])
+    
+    fixedbuff= ''
+    ficser = 0
+    for ch in buildbuff:
+        if ch == 'x':
+            ficser = 1
+            fixedbuff += 'tape['
             
-            else:
-                fixedbuff += ch
         
-        if ficser: fixedbuff += ']'
-        
-        OUTPUT += fixedbuff+';'
-        if OUTPUT[-2] == '}': OUTPUT = OUTPUT[:-1]
-        
-        OUTPUT += '\n'
+        elif ficser and not (ch in '1234567890'):
+            fixedbuff += ']'+ch
+            ficser = 0
+
+        else:
+            fixedbuff += ch
+
+    if ficser: fixedbuff += ']'
+    
+    OUTPUT += fixedbuff+';'
+    if OUTPUT[-2] == '}': OUTPUT = OUTPUT[:-1]
+    
+    OUTPUT += '\n'
 
 OUTPUT += 'return 0;}'
 
